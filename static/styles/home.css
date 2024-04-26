@@ -1,0 +1,107 @@
+body {
+    margin: 0;
+}
+
+.banner {
+    width: 100%;
+    height: 40%;   
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+}
+
+@font-face {
+    font-family: "CustomHeading";
+    src: url("../GreatVibes/GreatVibes-Regular.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "ButtonText";
+    src: url("../ABeeZee/ABeeZee-Regular.ttf") format("truetype");
+}
+
+@keyframes fadeInAnimation {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+        }
+}
+
+@keyframes buttonHover {
+    0% {
+        border-radius: 8px;
+        background-color: rgb(92, 0, 87);
+        color: #fff;
+    }
+    50% {
+        border-radius: 12px;
+        background-color: rgb(142, 52, 138);
+    }
+    100% {
+        border-radius: 15px;
+        background-color: #fff;
+        color: rgb(92, 0, 87);
+    }
+}
+.Title {
+    text-align: center;
+    font-family: "CustomHeading";
+    font-size: 7em;
+    color: rgb(92, 0, 87);
+    font-style: italic;
+    animation: fadeInAnimation ease 3s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+
+.chatStartButton {
+    background-color: rgb(92, 0, 87);
+    color: #fff;
+    font-family: "ButtonText";
+    font-size: 2em;
+    border-radius: 8px;
+    margin-left: 42.5%;
+    margin-right: auto;
+    animation: fadeInAnimation ease 3s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+
+.chatStartButton:hover {
+    border-radius: 15px;
+    background-color: #fff;
+    animation: buttonHover ease 1s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+ul {
+    margin-left: 30%;
+    margin-right: auto;
+    list-style-type: none;
+    font-family:'Courier New', Courier, monospace;
+    font-weight: bold;
+    width: 40%;
+}
+
+li:nth-child(even) {
+    text-align: left;
+}
+
+li:nth-child(odd) {
+    text-align: right;
+}
+
+.userMsg {
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 2px solid rgb(92, 0, 87);
+}
+
+.sendMsgButton {
+    background-color: rgb(92, 0, 87);
+    color: #fff;
+    border-radius: 8px;
+}

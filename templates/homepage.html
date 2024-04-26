@@ -1,0 +1,86 @@
+<html>
+    <head>
+        <title>chatbot</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="{{ url_for('static', path='/styles/home.css') }}" rel="stylesheet">
+    </head>
+
+    <body>
+        <img src="" alt="Banner" class="banner">
+        <div class="container" id="container">
+            <h1 class="Title" id="title">Music & Me</h1>
+            <div class="chatStart" id="chatButton"><button id="chatstart" class="chatStartButton" onclick="handleClick()">Start Chatting!</button></div>
+        </div>
+
+        <script>
+            ws = new WebSocket("ws://localhost:8000/ws");
+            const container = document.getElementById("container");
+            var msgno = 0;
+            ws.onmessage = function(event) {
+                console.log(event.data);
+                const server_msg = document.createElement("li");
+                server_msg.className = "serverMsg";
+                server_msg.innerHTML = event.data;
+                const chat_hist = document.getElementById("chathist");
+                chat_hist.appendChild(server_msg);
+                chat_hist.appendChild(document.createElement("br"));
+                const new_msg = document.createElement("input");
+                new_msg.type = "text";
+                new_msg.className = "userMsg";
+                new_msg.id = msgno;
+                msgno++;
+                const send_msg = document.createElement("button");
+                send_msg.innerHTML = "Send";
+                send_msg.className = "sendMsgButton";
+                send_msg.setAttribute("onclick", "handleSendMessage()");
+                chat_hist.appendChild(new_msg);
+                chat_hist.appendChild(send_msg);
+                chat_hist.appendChild(document.createElement("br"));
+                chat_hist.appendChild(document.createElement("br"));
+                
+            }
+
+            function handleSendMessage() {
+                const msgContainer = document.getElementById(msgno-1);
+                ws.send(msgContainer.value);
+                if (msgContainer.value == "END") {
+                    container.innerHTML = "";
+                    const title = document.createElement("h1");
+                    title.innerHTML = "Music & Me";
+                    title.className = "Title";
+                    container.appendChild(title);
+                    const chatCont = document.createElement("div");
+                    chatCont.className = "chatStart";
+                    chatCont.id = "chatButton";
+                }
+
+            }
+            function waitForSocketConnection(socket, callback) {
+                setTimeout(
+                    function() {
+                        if (socket.readyState === WebSocket.OPEN) {
+                            console.log("Connection is made");
+                            if (callback != null) {
+                                callback();
+                            }
+                            else {
+                                console.log("Waiting for connection...");
+                                waitForSocketConnection(socket, callback);
+                            }
+                        }
+                    }, 100);
+            }
+            function handleClick() {
+                waitForSocketConnection(ws, function() {
+                    var data = "Hello server";
+                    ws.send(data);
+                    console.log("Message sent!");
+                    container.innerHTML = "";
+                    const chatlist = document.createElement("ul");
+                    chatlist.id = "chathist";
+                    container.appendChild(chatlist)
+                })
+            }
+        </script>
+    </body>
+</html>
